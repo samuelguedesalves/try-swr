@@ -1,5 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createServer } from 'miragejs';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { UsersListage } from './components/UsersListage';
+import { UserDetails } from './components/UserDetails';
+import { Header } from './components/Header';
+
+import { GlobalStyles } from './styles/global';
 
 createServer({
   seeds(server) {
@@ -32,7 +39,7 @@ createServer({
     });
 
     this.get('/users/:id', (schema, request) => {
-      const id = Number(request.params.id);
+      const id = request.params.id;
       const users = [...schema.db.users];
 
       const user = users.find(user => user.id === id);
@@ -40,21 +47,21 @@ createServer({
       return user;
     });
   }
-})
+});
 
 export const App: React.FC = () => {
-  useEffect(() => {
-    async function loadUsers() {
-      const response = await fetch('http://localhost:3000/api/users');
-      const data = await response.json();
-
-      console.log(data);
-    }
-
-    loadUsers();
-  }, [])
-
   return (
-    <h1>Hello world!</h1>
+    <>
+      <Header />
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<UsersListage />} />
+          <Route path="/users/:id" element={<UserDetails />} />
+        </Routes>
+      </BrowserRouter>
+
+      <GlobalStyles />
+    </>
   );
-}
+};
