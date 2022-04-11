@@ -6,7 +6,7 @@ import { Container } from "./styles";
 export const UserDetails = () => {
   const params = useParams();
 
-  const { data: user } = useFetch<User>(`http://localhost:3000/api/users/${params.id}`);
+  const { data: user } = useFetch<User>(`/users/${params.id}`);
 
   return (
     <Container>

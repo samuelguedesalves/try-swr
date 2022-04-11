@@ -5,7 +5,7 @@ import { User } from "../../types/User";
 import { Container } from "./styles";
 
 export const UsersListage: React.FC = () => {
-  const { data: users } = useFetch<User[]>('http://localhost:3000/api/users');
+  const { data: users } = useFetch<User[]>('/users');
 
   return (
     <Container>
